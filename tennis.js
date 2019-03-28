@@ -8,12 +8,21 @@ let ballYSpeed = 5;
 let ballColor = "white";
 let paddleWidth = 10;
 let paddleHeight = 100;
+let paddle1Y = 250;
 
 function drawEverything() {
   //court
   drawRectangle(0, 0, canvas.width, canvas.height, "black");
   //left paddel
-  drawRectangle(0, 210, paddleWidth, paddleHeight, "white");
+  drawRectangle(0, paddle1Y, paddleWidth, paddleHeight, "white");
+  //rightpaddel
+  drawRectangle(
+    canvas.width - paddleWidth,
+    paddle1Y,
+    paddleWidth,
+    paddleHeight,
+    "white"
+  );
   //ball
   drawBall();
 }
@@ -31,11 +40,18 @@ function drawBall() {
 
 function moveEveryting() {
   ballX = ballX + ballXSpeed;
+  ballY = ballY + ballYSpeed;
   if (ballX > canvas.width - ballSize) {
     ballXSpeed = -ballXSpeed;
   }
   if (ballX < 0) {
     ballXSpeed = -ballXSpeed;
+  }
+  if (ballY > canvas.height - ballSize) {
+    ballYSpeed = -ballYSpeed;
+  }
+  if (ballY < 0) {
+    ballYSpeed = -ballYSpeed;
   }
 }
 
