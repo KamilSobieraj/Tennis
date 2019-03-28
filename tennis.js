@@ -5,6 +5,7 @@ let ballX = 50;
 let ballXSpeed = 4;
 let ballY = 50;
 let ballYSpeed = 5;
+let ballColor = "white";
 let paddleWidth = 10;
 let paddleHeight = 100;
 
@@ -14,12 +15,18 @@ function drawEverything() {
   //left paddel
   drawRectangle(0, 210, paddleWidth, paddleHeight, "white");
   //ball
-  drawRectangle(ballX, ballY, ballSize, ballSize, "red");
+  drawBall();
 }
 
 function drawRectangle(posX, posY, width, height, color) {
   canvasContext.fillStyle = color;
   canvasContext.fillRect(posX, posY, width, height);
+}
+function drawBall() {
+  canvasContext.fillStyle = ballColor;
+  canvasContext.beginPath();
+  canvasContext.arc(ballX, ballY, ballSize, 0, Math.PI * 2, true);
+  canvasContext.fill();
 }
 
 function moveEveryting() {
