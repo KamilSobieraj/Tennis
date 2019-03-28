@@ -76,5 +76,5 @@ setInterval(callBoth, 1000 / framesPerSecond);
 
 canvas.addEventListener("mousemove", function(e) {
   let mousePos = calculateMousePosition(e);
-  paddle1Y = mousePos.y;
+  paddle1Y = mousePos.y - (paddleHeight/2);
 });
