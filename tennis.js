@@ -9,6 +9,7 @@ let ballColor = "white";
 let paddleWidth = 10;
 let paddleHeight = 100;
 let paddle1Y = 250;
+let paddle2Y = 250;
 
 function drawEverything() {
   //court
@@ -18,7 +19,7 @@ function drawEverything() {
   //rightpaddel
   drawRectangle(
     canvas.width - paddleWidth,
-    paddle1Y,
+    paddle2Y,
     paddleWidth,
     paddleHeight,
     "white"
@@ -56,9 +57,7 @@ function ballPositionReset() {
 function moveEveryting() {
   ballX = ballX + ballXSpeed;
   ballY = ballY + ballYSpeed;
-  if (ballX > canvas.width - ballSize) {
-    ballXSpeed = -ballXSpeed;
-  }
+  //Bouncing a ball with a paddle
   if (ballX < 0) {
     if (ballY > paddle1Y && ballY < paddle1Y + paddleHeight) {
       ballXSpeed = -ballXSpeed;
@@ -66,10 +65,18 @@ function moveEveryting() {
       ballPositionReset();
     }
   }
-  if (ballY > canvas.height - ballSize) {
+  if (ballX > canvas.width - ballSize) {
+    if (ballY > paddle2Y && ballY < paddle2Y + paddleHeight) {
+      ballXSpeed = -ballXSpeed;
+    } else {
+      ballPositionReset();
+    }
+  }
+  //Top and bottom ball bounce
+  if (ballY < 0) {
     ballYSpeed = -ballYSpeed;
   }
-  if (ballY < 0) {
+  if (ballY > canvas.height) {
     ballYSpeed = -ballYSpeed;
   }
 }
