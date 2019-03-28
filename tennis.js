@@ -27,6 +27,17 @@ function drawEverything() {
   drawBall();
 }
 
+function calculateMousePosition(e) {
+  let rect = canvas.getBoundingClientRect();
+  let root = document.documentElement;
+  let mouseXPos = e.clientX - rect.left - root.scrollLeft;
+  let mouseYPos = e.clientY - rect.top - root.scrollTop;
+  return {
+    x: mouseXPos,
+    y: mouseYPos
+  };
+}
+
 function drawRectangle(posX, posY, width, height, color) {
   canvasContext.fillStyle = color;
   canvasContext.fillRect(posX, posY, width, height);
@@ -62,3 +73,8 @@ function callBoth() {
 
 let framesPerSecond = 50;
 setInterval(callBoth, 1000 / framesPerSecond);
+
+canvas.addEventListener("mousemove", function(e) {
+  let mousePos = calculateMousePosition(e);
+  paddle1Y = mousePos.y;
+});
