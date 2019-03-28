@@ -48,6 +48,10 @@ function drawBall() {
   canvasContext.arc(ballX, ballY, ballSize, 0, Math.PI * 2, true);
   canvasContext.fill();
 }
+function ballPositionReset() {
+  ballX = canvas.width / 2;
+  ballY = canvas.height / 2;
+}
 
 function moveEveryting() {
   ballX = ballX + ballXSpeed;
@@ -56,7 +60,11 @@ function moveEveryting() {
     ballXSpeed = -ballXSpeed;
   }
   if (ballX < 0) {
-    ballXSpeed = -ballXSpeed;
+    if (ballY > paddle1Y && ballY < paddle1Y + paddleHeight) {
+      ballXSpeed = -ballXSpeed;
+    } else {
+      ballPositionReset();
+    }
   }
   if (ballY > canvas.height - ballSize) {
     ballYSpeed = -ballYSpeed;
@@ -76,5 +84,5 @@ setInterval(callBoth, 1000 / framesPerSecond);
 
 canvas.addEventListener("mousemove", function(e) {
   let mousePos = calculateMousePosition(e);
-  paddle1Y = mousePos.y - (paddleHeight/2);
+  paddle1Y = mousePos.y - paddleHeight / 2;
 });
