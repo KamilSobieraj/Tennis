@@ -18,8 +18,8 @@ let showWinScreen = false;
 function drawEverything() {
   //court
   drawRectangle(0, 0, canvas.width, canvas.height, "black");
-  //left paddel
-  drawRectangle(0, paddle1Y, paddleWidth, paddleHeight, "white");
+
+  //score display
   if (showWinScreen) {
     canvasContext.fillStyle = "white";
     if (player1Score >= winningScore && player1Score - player2Score > 1) {
@@ -48,9 +48,9 @@ function drawEverything() {
         canvas.height / 2 + 50
       );
     }
-
     return;
   }
+  drawNet();
   //rightpaddel
   drawRectangle(
     canvas.width - paddleWidth,
@@ -59,11 +59,19 @@ function drawEverything() {
     paddleHeight,
     "white"
   );
+  //left paddel
+  drawRectangle(0, paddle1Y, paddleWidth, paddleHeight, "white");
   //ball
   drawBall();
   //Score
   canvasContext.fillText(`Player 1: ${player1Score}`, 100, 100);
   canvasContext.fillText(`Player 2: ${player2Score}`, canvas.width - 100, 100);
+}
+
+function drawNet() {
+  for (let i = 0; i < canvas.height; i += 40) {
+    drawRectangle(canvas.width / 2 - 1, i, 2, 20, "white");
+  }
 }
 
 function calculateMousePosition(e) {
