@@ -12,6 +12,7 @@ let paddle1Y = 250;
 let paddle2Y = 250;
 let player1Score = 0;
 let player2Score = 0;
+let winningScore = 2;
 
 function drawEverything() {
   //court
@@ -55,6 +56,11 @@ function drawBall() {
   canvasContext.fill();
 }
 function ballPositionReset() {
+  if (player1Score >= winningScore || player2Score >= winningScore) {
+    player1Score = 0;
+    player2Score = 0;
+  }
+
   ballXSpeed = -ballXSpeed;
   ballX = canvas.width / 2;
   ballY = canvas.height / 2;
@@ -78,26 +84,22 @@ function moveEveryting() {
   if (ballX < 0) {
     if (ballY > paddle1Y && ballY < paddle1Y + paddleHeight) {
       ballXSpeed = -ballXSpeed;
-      //Calc in which part of paddle ball is hittinh
-      let paddleHitPoint = ballY - (paddle1Y + paddleHeight / 2);
-      //Ball change direction depends on what part of paddle P1 hit
-      ballYSpeed = paddleHitPoint * 0.2;
+      let paddleHitPoint = ballY - (paddle1Y + paddleHeight / 2); //Calc in which part of paddle ball is hitting
+      ballYSpeed = paddleHitPoint * 0.2; //Ball change direction depends on what part of paddle P1 hit
     } else {
-      ballPositionReset();
       player2Score++;
+      ballPositionReset();
     }
   }
   //Right paddle
   if (ballX > canvas.width - ballSize) {
     if (ballY > paddle2Y && ballY < paddle2Y + paddleHeight) {
       ballXSpeed = -ballXSpeed;
-      //Calc in which part of paddle ball is hittinh
-      let paddleHitPoint = ballY - (paddle2Y + paddleHeight / 2);
-      //Ball change direction depends on what part of paddle P1 hit
-      ballYSpeed = paddleHitPoint * 0.2;
+      let paddleHitPoint = ballY - (paddle2Y + paddleHeight / 2); //Calc in which part of paddle ball is hitting
+      ballYSpeed = paddleHitPoint * 0.2; //Ball change direction depends on what part of paddle P1 hit
     } else {
-      ballPositionReset();
       player1Score++;
+      ballPositionReset();
     }
   }
   //Top and bottom ball bounce
