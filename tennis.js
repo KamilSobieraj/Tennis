@@ -13,12 +13,44 @@ let paddle2Y = 250;
 let player1Score = 0;
 let player2Score = 0;
 let winningScore = 2;
+let showWinScreen = false;
 
 function drawEverything() {
   //court
   drawRectangle(0, 0, canvas.width, canvas.height, "black");
   //left paddel
   drawRectangle(0, paddle1Y, paddleWidth, paddleHeight, "white");
+  if (showWinScreen) {
+    canvasContext.fillStyle = "white";
+    if (player1Score >= winningScore && player1Score - player2Score > 1) {
+      canvasContext.fillText(
+        `You won!`,
+        canvas.width / 2 - 40,
+        canvas.height / 2 - 50
+      );
+      canvasContext.fillText(
+        `Click to continue.`,
+        canvas.width / 2 - 55,
+        canvas.height / 2 + 50
+      );
+    } else if (
+      player2Score >= winningScore &&
+      player2Score - player1Score > 1
+    ) {
+      canvasContext.fillText(
+        `You lost!`,
+        canvas.width / 2 - 40,
+        canvas.height / 2 - 50
+      );
+      canvasContext.fillText(
+        `Click to continue.`,
+        canvas.width / 2 - 55,
+        canvas.height / 2 + 50
+      );
+    }
+
+    return;
+  }
   //rightpaddel
   drawRectangle(
     canvas.width - paddleWidth,
@@ -60,8 +92,7 @@ function ballPositionReset() {
     (player1Score >= winningScore || player2Score >= winningScore) &&
     (player1Score - player2Score > 1 || player2Score - player1Score > 1)
   ) {
-    player1Score = 0;
-    player2Score = 0;
+    showWinScreen = true;
   }
 
   ballXSpeed = -ballXSpeed;
@@ -79,6 +110,9 @@ function aiMovement() {
 }
 
 function moveEveryting() {
+  if (showWinScreen) {
+    return;
+  }
   aiMovement();
   ballX += ballXSpeed;
   ballY += ballYSpeed;
@@ -126,3 +160,11 @@ canvas.addEventListener("mousemove", function(e) {
   let mousePos = calculateMousePosition(e);
   paddle1Y = mousePos.y - paddleHeight / 2;
 });
+canvas.addEventListener("mousedown", handleClickAfterEndOfGame);
+function handleClickAfterEndOfGame(e) {
+  if (showWinScreen) {
+    player1Score = 0;
+    player2Score = 0;
+    showWinScreen = false;
+  }
+}
