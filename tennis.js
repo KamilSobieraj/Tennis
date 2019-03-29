@@ -28,7 +28,7 @@ function drawEverything() {
   );
   //ball
   drawBall();
-
+  //Score
   canvasContext.fillText(`Player 1: ${player1Score}`, 100, 100);
   canvasContext.fillText(`Player 2: ${player2Score}`, canvas.width - 100, 100);
 }
@@ -73,17 +73,27 @@ function moveEveryting() {
   ballX += ballXSpeed;
   ballY += ballYSpeed;
   //Bouncing a ball with a paddle
+  //Left paddle
   if (ballX < 0) {
     if (ballY > paddle1Y && ballY < paddle1Y + paddleHeight) {
       ballXSpeed = -ballXSpeed;
+      //Calc in which part of paddle ball is hittinh
+      let paddleHitPoint = ballY - (paddle1Y + paddleHeight / 2);
+      //Ball change direction depends on what part of paddle P1 hit
+      ballYSpeed = paddleHitPoint * 0.2;
     } else {
       ballPositionReset();
       player2Score++;
     }
   }
+  //Right paddle
   if (ballX > canvas.width - ballSize) {
     if (ballY > paddle2Y && ballY < paddle2Y + paddleHeight) {
       ballXSpeed = -ballXSpeed;
+      //Calc in which part of paddle ball is hittinh
+      let paddleHitPoint = ballY - (paddle2Y + paddleHeight / 2);
+      //Ball change direction depends on what part of paddle P1 hit
+      ballYSpeed = paddleHitPoint * 0.2;
     } else {
       ballPositionReset();
       player1Score++;
