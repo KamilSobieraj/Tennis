@@ -10,6 +10,8 @@ let paddleWidth = 10;
 let paddleHeight = 100;
 let paddle1Y = 250;
 let paddle2Y = 250;
+let player1Score = 0;
+let player2Score = 0;
 
 function drawEverything() {
   //court
@@ -26,6 +28,9 @@ function drawEverything() {
   );
   //ball
   drawBall();
+
+  canvasContext.fillText(`Player 1: ${player1Score}`, 100, 100);
+  canvasContext.fillText(`Player 2: ${player2Score}`, canvas.width - 100, 100);
 }
 
 function calculateMousePosition(e) {
@@ -54,15 +59,26 @@ function ballPositionReset() {
   ballY = canvas.height / 2;
 }
 
+function aiMovement() {
+  let paddle2YCenter = paddle2Y + paddleHeight / 2;
+  if (paddle2YCenter < ballY - 35) {
+    paddle2Y += 6;
+  } else if (paddle2YCenter > ballY + 35) {
+    paddle2Y -= 6;
+  }
+}
+
 function moveEveryting() {
-  ballX = ballX + ballXSpeed;
-  ballY = ballY + ballYSpeed;
+  aiMovement();
+  ballX += ballXSpeed;
+  ballY += ballYSpeed;
   //Bouncing a ball with a paddle
   if (ballX < 0) {
     if (ballY > paddle1Y && ballY < paddle1Y + paddleHeight) {
       ballXSpeed = -ballXSpeed;
     } else {
       ballPositionReset();
+      player2Score++;
     }
   }
   if (ballX > canvas.width - ballSize) {
@@ -70,6 +86,7 @@ function moveEveryting() {
       ballXSpeed = -ballXSpeed;
     } else {
       ballPositionReset();
+      player1Score++;
     }
   }
   //Top and bottom ball bounce
