@@ -56,7 +56,10 @@ function drawBall() {
   canvasContext.fill();
 }
 function ballPositionReset() {
-  if (player1Score >= winningScore || player2Score >= winningScore) {
+  if (
+    (player1Score >= winningScore || player2Score >= winningScore) &&
+    (player1Score - player2Score > 1 || player2Score - player1Score > 1)
+  ) {
     player1Score = 0;
     player2Score = 0;
   }
